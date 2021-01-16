@@ -2,7 +2,6 @@
 
 Este es un ejemplo basico para una calculadora simple con una lista de operaciones
 
-- Solo trabaja con enteros (solo division entera)
 - No existen parentesis
 
 ## Available Scripts
