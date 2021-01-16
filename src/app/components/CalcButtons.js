@@ -26,14 +26,15 @@ export default function CalcButtons() {
            <CalcButton buttonType="button-gray" text="7"></CalcButton> 
            <CalcButton buttonType="button-gray" text="8"></CalcButton> 
            <CalcButton buttonType="button-gray" text="9"></CalcButton>            
-           <button 
-            style={{backgroundColor:"yellow", fontWeight:"bold"}}
-            onClick={() => dispatch(clearDisplay())}>C</button>
+           <CalcButton buttonType="button-gray" text="0"></CalcButton>            
            <button 
             style={{backgroundColor:"green", fontWeight:"bold", color:"white"}}
             onClick={() => dispatch(backSpace())}>←</button>
            </div>
            <div style={{display:"block"}}>
+           <button 
+            style={{backgroundColor:"yellow", fontWeight:"bold"}}
+            onClick={() => dispatch(clearDisplay())}>C</button>
                <button 
                style={{backgroundColor:"red", color:"white"}}
                onClick={() => dispatch(calcValue())}>Calc!!</button>

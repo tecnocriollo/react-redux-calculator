@@ -12,6 +12,12 @@ export const hasSymbol = (str) => {
 return str.search(symbolRegex) !== -1
 }
 
+export const findFirstSymbol = (calcValues) => {
+    const symbolIndex = calcValues.findIndex( val => {
+        return hasSymbol(val);
+    });
+    return symbolIndex !== -1 ? {symbol: calcValues[symbolIndex], index: symbolIndex}:null;
+}
 
 const getInfix = (expression) => {
     return expression.match(symbolNumberRegex)
@@ -65,8 +71,45 @@ const getPolish = (infix) =>  {
     return polish;
 }
 
+const calcPair = (left, right, symbol) => {
+    let value = 0;
+    switch(symbol){
+        case '+':
+            value = parseFloat(left) + parseFloat(right);
+            break;
+        case '-':
+            value = parseFloat(left) - parseFloat(right);
+            break;
+        case '*':
+            value = parseFloat(left) * parseFloat(right);
+            break;
+        case '/':
+            value = parseFloat(left) / parseFloat(right);
+            break;
+        default:
+            value = 0;
+    }
+    return value.toString();
+}
+
 const calculate = (polish) => {
-    return "";
+    let calcValues = [...polish];
+    while(calcValues.length > 1){
+        const firstSymbol = findFirstSymbol(calcValues);
+        const leftvalue = calcValues[firstSymbol.index - 2];
+        const rightvalue = calcValues[firstSymbol.index - 1];
+        const symbol = firstSymbol.symbol;
+        const result = calcPair(leftvalue,rightvalue, symbol);
+        if(calcValues.length > 3){
+        calcValues = [...calcValues.slice(0, firstSymbol.index -2), 
+                        result, 
+                        ...calcValues.slice(firstSymbol.index + 1, calcValues.length)]
+        }
+        else{
+            calcValues = [result];
+        }
+    }
+    return calcValues[0];
 }
 
 export const calculateExpression = (expression) => {
