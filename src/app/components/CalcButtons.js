@@ -2,7 +2,7 @@ import React from 'react'
 import './CalcButtons.scss'
 import CalcButton from './CalcButton'
 import {useDispatch} from 'react-redux'
-import { backSpace, clearDisplay } from '../store/calcSlice';
+import { backSpace, clearDisplay,  calcValue } from '../store/calcSlice';
 
 export default function CalcButtons() {
     const dispatch = useDispatch();
@@ -33,7 +33,11 @@ export default function CalcButtons() {
             style={{backgroundColor:"green", fontWeight:"bold", color:"white"}}
             onClick={() => dispatch(backSpace())}>←</button>
            </div>
-           <div style={{display:"block"}}><button style={{backgroundColor:"red", color:"white"}}>Calc!!</button></div>
+           <div style={{display:"block"}}>
+               <button 
+               style={{backgroundColor:"red", color:"white"}}
+               onClick={() => dispatch(calcValue())}>Calc!!</button>
+            </div>
         </div>
     )
 }

@@ -1,8 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-
-const isSymbol = (chr) => {
-return chr.search(/[+\-*/]/) !== -1
-}
+import {hasSymbol, calculateExpression} from './calcFuncs'
 
 
 
@@ -13,14 +10,14 @@ export const calcSlice = createSlice({
     },
     reducers:{
         updateDisplay: (state, key) => { 
-          if(!isSymbol(key.payload) || 
-            (isSymbol(key.payload) && 
+          if(!hasSymbol(key.payload) || 
+            (hasSymbol(key.payload) && 
             state.display !== "" && 
-            !isSymbol(state.display[state.display.length - 1]))){
+            !hasSymbol(state.display[state.display.length - 1]))){
            return {...state, 
                    display: `${state.display}${key.payload}`}; 
            }
-           else return state;
+           return state;
         },
         clearDisplay: (state) => {          
            return {...state, 
@@ -31,7 +28,12 @@ export const calcSlice = createSlice({
             display: state.display.slice(0, state.display.length -1)}; 
         },
         calcValue: (state) => {
-          
+          if(hasSymbol(state.display)){
+            const result = calculateExpression(state.display)
+            return {...state, 
+              display: result.toString()}; 
+          }  
+          return state;
         }
     }
 });
